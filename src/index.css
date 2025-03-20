@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    font-family: 'Rubik', sans-serif;
+}
+
+.bg-blue-50 { background-color: var(--blue-50) !important; }
+.bg-blue-100 { background-color: var(--blue-100) !important; }
+.bg-blue-200 { background-color: var(--blue-200) !important; }
+.bg-blue-300 { background-color: var(--blue-300) !important; }
+.bg-blue-400 { background-color: var(--blue-400) !important; }
+.bg-blue-500 { background-color: var(--blue-500) !important; }
+.bg-blue-600 { background-color: var(--blue-600) !important; }
+.bg-blue-700 { background-color: var(--blue-700) !important; }
+.bg-blue-800 { background-color: var(--blue-800) !important; }
+.bg-blue-900 { background-color: var(--blue-900) !important; }
+
+.text-blue-50 { color: var(--blue-50) !important; }
+.text-blue-100 { color: var(--blue-100) !important; }
+.text-blue-200 { color: var(--blue-200) !important; }
+.text-blue-300 { color: var(--blue-300) !important; }
+.text-blue-400 { color: var(--blue-400) !important; }
+.text-blue-500 { color: var(--blue-500) !important; }
+.text-blue-600 { color: var(--blue-600) !important; }
+.text-blue-700 { color: var(--blue-700) !important; }
+.text-blue-800 { color: var(--blue-800) !important; }
+.text-blue-900 { color: var(--blue-900) !important; }
+
+.bg-white { background-color: var(--white) !important; }
+.text-white { color: var(--white) !important; }
+
+.bg-gray-50 { background-color: var(--gray-50) !important; }
+.bg-gray-100 { background-color: var(--gray-100) !important; }
+.bg-gray-200 { background-color: var(--gray-200) !important; }
+.bg-gray-300 { background-color: var(--gray-300) !important; }
+.bg-gray-400 { background-color: var(--gray-400) !important; }
+.bg-gray-500 { background-color: var(--gray-500) !important; }
+.bg-gray-600 { background-color: var(--gray-600) !important; }
+.bg-gray-700 { background-color: var(--gray-700) !important; }
+.bg-gray-800 { background-color: var(--gray-800) !important; }
+.bg-gray-900 { background-color: var(--gray-900) !important; }
+
+.text-gray-100 { color: var(--gray-100) !important; }
+.text-gray-200 { color: var(--gray-200) !important; }
+.text-gray-300 { color: var(--gray-300) !important; }
+.text-gray-400 { color: var(--gray-400) !important; }
+.text-gray-500 { color: var(--gray-500) !important; }
+.text-gray-600 { color: var(--gray-600) !important; }
+.text-gray-700 { color: var(--gray-700) !important; }
+.text-gray-800 { color: var(--gray-800) !important; }
+.text-gray-900 { color: var(--gray-900) !important; }
