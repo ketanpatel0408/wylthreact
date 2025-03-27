@@ -10,7 +10,7 @@ const data = [
     { month: "Jan-2025", openingAUM: 11.51, closingAUM: 24.53, inflowExisting: 0, inflowNew: 0, marketMovement: -11.33, outflows: 0 },
 ];
 
-const MFAUMGrowth = () => {
+const MFSIPBook = () => {
     const [activeTab, setActiveTab] = useState(0);
 
     return (
@@ -56,4 +56,4 @@ const MFAUMGrowth = () => {
     );
 };
 
-export default MFAUMGrowth;
+export default MFSIPBook;

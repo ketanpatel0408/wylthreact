@@ -26,6 +26,7 @@ const CurrFYEarnings = () => {
                 ))}
             </div>
             <CommonChart
+                chartMaxHeight={360}
                 chartType="column"
                 title={false}
                 yAxisLabel="Amount"

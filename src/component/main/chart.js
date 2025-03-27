@@ -3,32 +3,35 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { useColor } from "./ColorImplementation/ColorContext";
 
-const CommonChart = ({ chartType = "column", title = "Chart", yAxisLabel = "Value", legend = false, xAxisLabel = "Data", categories = [], series = [] }) => {
+const CommonChart = ({ chartType = "column", title = "Chart", yAxisLabel = "Value", legend = false, xAxisLabel = "Data", categories = [], series = [], tooltip = null, plotOptions = null, chartMaxHeight = null }) => {
   const [chartOptions, setChartOptions] = useState({});
   const { primaryColor, baseColor } = useColor();
-  const [chartHeight, setChartHeight] = useState(null);
+  const [chartHeight, setChartHeight] = useState(chartMaxHeight || "100%");
 
   useEffect(() => {
     const handleResize = () => {
-      const newHeight = window.innerWidth >= 768 ? "100%" : null;
-      if (newHeight !== chartHeight) {
-        setChartHeight(newHeight);
+      if (window.innerWidth >= 768) {
+        setChartHeight(chartMaxHeight || "100%");
+      } else {
+        setChartHeight(null);
       }
     };
 
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [chartHeight]); // Ensure the effect runs when `chartHeight` changes
+  }, [chartMaxHeight]);
 
   useEffect(() => {
-    const allSeriesEmpty = series.every(s => !s.data || s.data.length === 0 || s.data.every(value => value === null || value === undefined));
+    const allSeriesEmpty = series.every(
+      (s) => !s.data || s.data.length === 0 || s.data.every((value) => value === null || value === undefined)
+    );
 
     setChartOptions({
       chart: {
         type: chartType,
         backgroundColor: baseColor,
-        height: chartHeight, // Dynamically set height
+        height: chartHeight,
         events: {
           load: function () {
             let chart = this;
@@ -38,10 +41,7 @@ const CommonChart = ({ chartType = "column", title = "Chart", yAxisLabel = "Valu
             if (allSeriesEmpty) {
               chart.noDataText = chart.renderer
                 .text("No Data Found", chart.plotLeft + chart.plotWidth / 2 - 50, chart.plotTop + chart.plotHeight / 2)
-                .css({
-                  color: "#4572A7",
-                  fontSize: "16px"
-                })
+                .css({ color: "#4572A7", fontSize: "16px" })
                 .add();
             }
           },
@@ -53,31 +53,19 @@ const CommonChart = ({ chartType = "column", title = "Chart", yAxisLabel = "Valu
             if (allSeriesEmpty) {
               chart.noDataText = chart.renderer
                 .text("No Data Found", chart.plotLeft + chart.plotWidth / 2 - 50, chart.plotTop + chart.plotHeight / 2)
-                .css({
-                  color: "#4572A7",
-                  fontSize: "16px"
-                })
+                .css({ color: "#4572A7", fontSize: "16px" })
                 .add();
             }
           }
         }
       },
-      title: {
-        text: title || null
-      },
-      xAxis: {
-        categories: categories,
-        title: {
-          text: xAxisLabel || null,
-          margin: 15
-        },
-      },
-      credits: {
-        enabled: false
-      },
-      yAxis: {
-        title: {
-          text: yAxisLabel || null
+      title: { text: title || null },
+      xAxis: { categories, title: { text: xAxisLabel || null, margin: 15 } },
+      credits: { enabled: false },
+      yAxis: { title: { text: yAxisLabel || null } },
+      plotOptions: {
+        column: {
+          stacking: plotOptions || null,
         }
       },
       legend: {
@@ -85,32 +73,51 @@ const CommonChart = ({ chartType = "column", title = "Chart", yAxisLabel = "Valu
         symbolHeight: 10,
         symbolWidth: 10,
         symbolRadius: 5,
-        itemStyle: {
-          color: primaryColor,
-          fontWeight: "bold"
+        itemStyle: { color: primaryColor, fontWeight: "bold" }
+      },
+      tooltip: tooltip || {
+        shared: true,
+        useHTML: true,
+        backgroundColor: "#FFF",
+        borderWidth: 1,
+        borderColor: "#ddd",
+        formatter: function () {
+          return `<b>${this.x}</b><br/>Value: ${this.y}`;
         }
       },
       series: allSeriesEmpty
         ? [{ name: "Data", data: Array(categories.length).fill(null), showInLegend: false, color: primaryColor }]
-        : series.map(s => ({
-          ...s,
+        : series.map((s) => ({
+          name: s.name,
+          stack: s.stack || null,
+          visible: s.visible !== undefined ? s.visible : true,
+          showInLegend: s.showInLegend !== undefined ? s.showInLegend : true,
           data: s.data.map((value, index) => ({
             y: value,
-            color: s.colorList ? s.colorList[index] : primaryColor
+            color: s.name === "Market Growth/Loss"
+              ? (value >= 0 ? "#67C99C" : "#CB444A")
+              : (s.colorList ? s.colorList[index] : s.color || primaryColor)
           })),
-          color: s.colorList ? s.colorList[2] : primaryColor,
+          color:
+            s.name === "Market Growth/Loss"
+              ? Highcharts.color({
+                linearGradient: { x1: 0, x2: 1, y1: 0, y2: 1 },
+                stops: [
+                  [0, "#CB444A"],
+                  [1, "#67C99C"]
+                ]
+              }).get()
+              : s.color || primaryColor,
           marker: {
             symbol: "circle",
-            fillColor: s.colorList ? s.colorList[0] : primaryColor,
+            fillColor: s.colorList ? s.colorList[0] : s.color || primaryColor,
             lineColor: "#ffffff",
             lineWidth: 2
           }
         })),
-      accessibility: {
-        enabled: false
-      }
+      accessibility: { enabled: false }
     });
-  }, [chartType, title, yAxisLabel, xAxisLabel, legend, categories, series, primaryColor, baseColor, chartHeight]);
+  }, [chartType, title, yAxisLabel, xAxisLabel, legend, categories, series, primaryColor, baseColor, chartHeight, tooltip, plotOptions, chartMaxHeight]);
 
   return <HighchartsReact highcharts={Highcharts} options={chartOptions} />;
 };

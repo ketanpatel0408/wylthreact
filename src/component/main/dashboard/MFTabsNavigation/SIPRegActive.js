@@ -5,6 +5,7 @@ const SIPRegActive = () => {
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-10">
             <CommonChart
+                chartMaxHeight={460}
                 chartType="column"
                 title={false}
                 yAxisLabel="No. of SIP Registred"
@@ -20,6 +21,7 @@ const SIPRegActive = () => {
                 ]}
             />
             <CommonChart
+                chartMaxHeight={460}
                 chartType="column"
                 title={false}
                 yAxisLabel="No. of Active Investment A/C"

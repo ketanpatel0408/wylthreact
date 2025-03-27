@@ -5,6 +5,7 @@ const Performance = () => {
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-10">
             <CommonChart
+                chartMaxHeight={460}
                 chartType="column"
                 title={false}
                 yAxisLabel="Amount"
@@ -20,6 +21,7 @@ const Performance = () => {
                 ]}
             />
              <CommonChart
+                chartMaxHeight={460}
                 chartType="column"
                 title={false}
                 yAxisLabel="Amount"

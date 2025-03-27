@@ -4,6 +4,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Box } from "@mui/material";
 import MFAUMGrowth from "./SlickSlider/MFAUMGrowth";
+import MFSIPBook from "./SlickSlider/MFSIPBook";
 
 const SlickSlider = () => {
     const [currentSlide, setCurrentSlide] = useState(0);
@@ -11,6 +12,7 @@ const SlickSlider = () => {
 
     const totalSlides = React.Children.count([
         <MFAUMGrowth />,
+        <MFSIPBook />
     ]);
 
     useEffect(() => {
@@ -58,6 +60,7 @@ const SlickSlider = () => {
         arrows: true,
         prevArrow: <PrevArrow />,
         nextArrow: <NextArrow />,
+        rtl: true,
         afterChange: (current) => setCurrentSlide(current),
         beforeChange: () => applySlidePadding(),
         responsive: [
@@ -80,6 +83,7 @@ const SlickSlider = () => {
         <Box className="w-[calc(100%+20px)] mx-auto">
             <Slider ref={sliderRef} {...settings}>
                 <MFAUMGrowth />
+                <MFSIPBook />
             </Slider>
         </Box>
     );
