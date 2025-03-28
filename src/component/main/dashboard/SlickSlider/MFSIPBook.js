@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Checkbox, FormControlLabel, Typography } from "@mui/material";
 import { Tabs, Tab, Box } from "@mui/material";
-import MFAUMChart from "./MFAUMGrowth/MFAUMChart";
-import MFAUMList from "./MFAUMGrowth/MFAUMList";
+import MFSIPBookChart from "./MFSIPBook/MFSIPBookChart";
+import MFSIPBookList from "./MFSIPBook/MFSIPBookList";
 
 const data = [
-    { month: "Mar-2025", openingAUM: 19.71, closingAUM: 20.03, inflowExisting: 3, inflowNew: 5, marketMovement: 10.32, outflows: 12 },
-    { month: "Feb-2025", openingAUM: 20.54, closingAUM: 19.71, inflowExisting: 2.70, inflowNew: 0, marketMovement: 16.97, outflows: 0 },
-    { month: "Jan-2025", openingAUM: 11.51, closingAUM: 24.53, inflowExisting: 0, inflowNew: 0, marketMovement: -11.33, outflows: 0 },
+    { month: "Mar-2025", openingSIP: 56.40, closingSIP: 31.40, newSIPExistingAccounts: 3, existingAccountsNo: 5, newSIPAccounts: 10, newAccountsNo: 12, onGoingSIP: 2, sipCeased: -20, sipMatured: -2 },
+    { month: "Feb-2025", openingSIP: 9.00, closingSIP: 5.00, newSIPExistingAccounts: 2, existingAccountsNo: 2, newSIPAccounts: 16, newAccountsNo: 4, onGoingSIP: 30, sipCeased: 0, sipMatured: -6 },
+    { month: "Jan-2025", openingSIP: 24.00, closingSIP: 15.00, newSIPExistingAccounts: 2, existingAccountsNo: 1, newSIPAccounts: 0, newAccountsNo: 0, onGoingSIP: 14, sipCeased: 0, sipMatured: -4 },
 ];
 
 const MFSIPBook = () => {
@@ -16,7 +16,7 @@ const MFSIPBook = () => {
     return (
         <div className="bg-white w-full p-5">
             <div className="flex flex-row justify-between items-center mb-2">
-                <Typography variant="h6" className="text-blue-500">MF AUM Growth</Typography>
+                <Typography variant="h6" className="text-blue-500">MF SIP Book</Typography>
                 <Box className="flex justify-end">
                     {/* Tabs List */}
                     <Tabs className="!min-h-max" value={activeTab} onChange={(e, newValue) => setActiveTab(newValue)}>
@@ -46,12 +46,12 @@ const MFSIPBook = () => {
             {activeTab === 0 &&
                 <FormControlLabel className="mb-4"
                     control={<Checkbox size="small" className="!pt-0 !pb-0" />}
-                    label={<span className="text-xs">Show inflow/outflow only</span>}
+                    label={<span className="text-xs">Show New SIPs only</span>}
                 />
             }
 
-            {activeTab === 0 && <MFAUMChart data={data} />}
-            {activeTab === 1 && <MFAUMList data={data} />}
+            {activeTab === 0 && <MFSIPBookChart data={data} />}
+            {activeTab === 1 && <MFSIPBookList data={data} />}
         </div>
     );
 };

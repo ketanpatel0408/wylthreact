@@ -54,5 +54,4 @@ body {
 
 .highcharts-tooltip-container {
     z-index: 9999 !important;
-    position: fixed !important;
 }

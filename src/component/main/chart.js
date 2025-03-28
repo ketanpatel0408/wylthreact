@@ -70,10 +70,21 @@ const CommonChart = ({ chartType = "column", title = "Chart", yAxisLabel = "Valu
       },
       legend: {
         enabled: legend || false,
-        symbolHeight: 10,
-        symbolWidth: 10,
+        symbolHeight: 0,
+        symbolWidth: 0,
         symbolRadius: 5,
-        itemStyle: { color: primaryColor, fontWeight: "bold" }
+        useHTML: true,
+        itemStyle: { color: primaryColor, fontWeight: "bold" },
+        labelFormatter: function () {
+          let colorStyle;
+          if (this.name === "Market Growth/Loss") {
+              colorStyle = "background: linear-gradient(45deg, #CB444A, #67C99C);";
+          } else {
+              colorStyle = `background-color: ${this.data[0].color};`;
+          }
+  
+          return `<span style="display: inline-block; width: 10px; height: 10px; ${colorStyle} border-radius: 50%; margin-right: 5px;"></span> ${this.name}`;
+      }
       },
       tooltip: tooltip || {
         shared: true,
@@ -98,16 +109,6 @@ const CommonChart = ({ chartType = "column", title = "Chart", yAxisLabel = "Valu
               ? (value >= 0 ? "#67C99C" : "#CB444A")
               : (s.colorList ? s.colorList[index] : s.color || primaryColor)
           })),
-          color:
-            s.name === "Market Growth/Loss"
-              ? Highcharts.color({
-                linearGradient: { x1: 0, x2: 1, y1: 0, y2: 1 },
-                stops: [
-                  [0, "#CB444A"],
-                  [1, "#67C99C"]
-                ]
-              }).get()
-              : s.color || primaryColor,
           marker: {
             symbol: "circle",
             fillColor: s.colorList ? s.colorList[0] : s.color || primaryColor,

@@ -43,7 +43,7 @@ const SlickSlider = () => {
 
     const NextArrow = ({ onClick }) => (
         <button
-            className={`absolute right-0 top-1/2 transform -translate-y-1/2 bg-white text-gray-700 p-3 rounded-l-[20px] shadow-lg hover:bg-gray-200 z-10 h-[140px] 
+            className={`absolute right-[-20px] top-1/2 transform -translate-y-1/2 bg-white text-gray-700 p-3 rounded-l-[20px] shadow-lg hover:bg-gray-200 z-10 h-[140px] 
                 ${Math.round(currentSlide) >= totalSlides - 1 ? "hidden" : "block"}`} // Hide Next on last slide
             onClick={onClick}
         >
@@ -60,7 +60,6 @@ const SlickSlider = () => {
         arrows: true,
         prevArrow: <PrevArrow />,
         nextArrow: <NextArrow />,
-        rtl: true,
         afterChange: (current) => setCurrentSlide(current),
         beforeChange: () => applySlidePadding(),
         responsive: [
@@ -80,7 +79,7 @@ const SlickSlider = () => {
     };
 
     return (
-        <Box className="w-[calc(100%+20px)] mx-auto">
+        <Box className="w-[calc(100%)] mx-auto">
             <Slider ref={sliderRef} {...settings}>
                 <MFAUMGrowth />
                 <MFSIPBook />

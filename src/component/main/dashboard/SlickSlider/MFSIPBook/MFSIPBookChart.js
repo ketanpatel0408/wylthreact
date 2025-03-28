@@ -3,7 +3,7 @@ import CommonChart from "../../../chart";
 import ReactDOMServer from 'react-dom/server';
 import { Table, TableBody, TableCell, TableContainer, TableRow, Paper } from "@mui/material";
 
-const MFAUMChart = ({ data }) => {
+const MFSIPBookChart = ({ data }) => {
     return (
         <CommonChart
             chartMaxHeight={460}
@@ -23,18 +23,23 @@ const MFAUMChart = ({ data }) => {
                     let chart = this.series.chart;
                     let index = this.point.index;
                     let categories = chart.xAxis[0].categories;
-                    let closingAUMValue = data[index]?.closingAUM;
+                    let closingSIPValue = data[index]?.closingSIP;
 
                     const tooltipFields = [
-                        { label: "Opening AUM", seriesIndex: 0, color: "#043472" },
-                        { label: "Closing AUM", value: closingAUMValue, color: "#043472" },
-                        { label: "AUM Inflow from Existing Accounts", seriesIndex: 1, color: "#0852B2" },
-                        { label: "AUM Inflow from New Accounts", seriesIndex: 2, color: "#F9BF00" },
-                        { label: "AUM Outflows", seriesIndex: 4, color: "#FFAA60" },
+                        { label: "Opening SIP", seriesIndex: 2, color: "#043472" },
+                        { label: "Closing SIP", value: closingSIPValue, color: "#043472" },
+                        { label: "Existing Accounts", seriesIndex: 3, color: "#0852B2" },
+                        { label: "New Accounts", seriesIndex: 4, color: "#F9BF00" },
+                        { label: "Ongoing SIP", seriesIndex: 5, color: "#8CD8CF" },
                         {
-                            label: "Market Movement",
-                            seriesIndex: 3,
-                            getColor: (value) => (value < 0 ? "#B10D2D" : "#008B00")
+                            label: "SIP Ceased",
+                            seriesIndex: 0,
+                            getColor: (value) => (value < 0 ? "#B10D2D" : "#FFAA60")
+                        },
+                        {
+                            label: "SIP Matured",
+                            seriesIndex: 1,
+                            getColor: (value) => (value < 0 ? "#B10D2D" : "#FFAA60")
                         }
                     ];
 
@@ -59,31 +64,29 @@ const MFAUMChart = ({ data }) => {
                                     {tooltipFields
                                         .map((field, i) => {
                                             if (i % 2 === 0) {
-
                                                 let fieldValue = getFormattedValue(field);
                                                 let fieldColor = field.getColor
                                                     ? field.getColor(fieldValue)
                                                     : field.color;
 
-                                                let nextFieldValue = tooltipFields[i + 1]
-                                                    ? getFormattedValue(tooltipFields[i + 1])
-                                                    : "";
-                                                let nextFieldColor = tooltipFields[i + 1]?.getColor
-                                                    ? tooltipFields[i + 1].getColor(nextFieldValue)
-                                                    : tooltipFields[i + 1]?.color;
+                                                let nextField = tooltipFields[i + 1];
+                                                let nextFieldValue = nextField ? getFormattedValue(nextField) : "";
+                                                let nextFieldColor = nextField?.getColor
+                                                    ? nextField.getColor(nextFieldValue)
+                                                    : nextField?.color;
 
                                                 return (
                                                     <React.Fragment key={`row-group-${i}`}>
                                                         <TableRow key={`label-${i}`}>
                                                             <TableCell className="pr-3 text-wrap">{field.label}</TableCell>
-                                                            <TableCell className="pr-3 text-wrap">{tooltipFields[i + 1]?.label || ""}</TableCell>
+                                                            <TableCell className="pr-3 text-wrap">{nextField?.label || ""}</TableCell>
                                                         </TableRow>
                                                         <TableRow key={`value-${i}`}>
                                                             <TableCell className="font-semibold pb-5" style={{ color: fieldColor }}>
-                                                                {fieldValue !== null ? fieldValue.toLocaleString("en-IN", { style: "currency", currency: "INR" }) : "-"}
+                                                                {fieldValue}
                                                             </TableCell>
                                                             <TableCell className="font-semibold pb-5" style={{ color: nextFieldColor }}>
-                                                                {nextFieldValue !== null ? nextFieldValue.toLocaleString("en-IN", { style: "currency", currency: "INR" }) : ""}
+                                                                {nextFieldValue}
                                                             </TableCell>
                                                         </TableRow>
                                                     </React.Fragment>
@@ -100,18 +103,19 @@ const MFAUMChart = ({ data }) => {
                 }
             }}
             series={[
-                { name: "Opening AUM", data: data.map(d => d.openingAUM), stack: "AUM", color: "#043472" },
-                { name: "AUM Inflow Existing Acc.", data: data.map(d => d.inflowExisting), stack: "AUM", color: "#0852B2" },
-                { name: "AUM Inflow New Acc.", data: data.map(d => d.inflowNew), stack: "AUM", color: "#F9BF00" },
-                { name: "Market Growth/Loss", data: data.map(d => d.marketMovement), stack: "AUM" },
-                { name: "AUM Outflows", data: data.map(d => d.outflows), stack: "AUM", color: "#FFAA60" },
-                { name: "Closing AUM", data: data.map(d => d.closingAUM), stack: "AUM", visible: false, showInLegend: false },
-                { name: "Existing Acc.", data: data.map(d => d.existingAcc), stack: "AUM", visible: false, showInLegend: false },
-                { name: "New Acc.", data: data.map(d => d.newAcc), stack: "AUM", visible: false, showInLegend: false }
+                { name: "SIP Ceased", data: data.map(d => d.sipCeased), stack: "SIP", color: "#FFAA60" },
+                { name: "SIP Matured/Maturing", data: data.map(d => d.sipMatured), stack: "SIP", color: "#B10D2D" },
+                { name: "Opening SIP", data: data.map(d => d.openingSIP), stack: "SIP", color: "#043472" },
+                { name: "New SIP by Existing Acc.", data: data.map(d => d.newSIPExistingAccounts), stack: "SIP", color: "#5994E0" },
+                { name: "SIP by New Acc.", data: data.map(d => d.newSIPAccounts), stack: "SIP", color: "#F9BF00" },
+                { name: "Ongoing SIP", data: data.map(d => d.onGoingSIP), stack: "SIP", color: "#8CD8CF" },
+                { name: "Closing SIP", data: data.map(d => d.closingSIP), stack: "SIP", visible: false, showInLegend: false },
+                { name: "Existing Acc. No.", data: data.map(d => d.existingAccountsNo), stack: "SIP", visible: false, showInLegend: false },
+                { name: "New Acc. No.", data: data.map(d => d.newAccountsNo), stack: "SIP", visible: false, showInLegend: false }
             ]}
             plotOptions="normal"
         />
     )
 }
 
-export default MFAUMChart;
+export default MFSIPBookChart;
