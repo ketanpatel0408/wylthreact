@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Checkbox, FormControlLabel, Typography } from "@mui/material";
 import { Tabs, Tab, Box } from "@mui/material";
 import MFSIPBookChart from "./MFSIPBook/MFSIPBookChart";
@@ -12,14 +12,24 @@ const data = [
 
 const MFSIPBook = () => {
     const [activeTab, setActiveTab] = useState(0);
+    const chartRef = useRef(null);
+
+    const handleTabChange = (e, newValue) => {
+        setActiveTab(newValue);
+
+        setTimeout(() => {
+            if (chartRef.current?.chart) {
+                chartRef.current.chart.redraw();
+            }
+        }, 100);
+    };
 
     return (
         <div className="bg-white w-full p-5">
             <div className="flex flex-row justify-between items-center mb-2">
                 <Typography variant="h6" className="text-blue-500">MF SIP Book</Typography>
                 <Box className="flex justify-end">
-                    {/* Tabs List */}
-                    <Tabs className="!min-h-max" value={activeTab} onChange={(e, newValue) => setActiveTab(newValue)}>
+                    <Tabs className="!min-h-max" value={activeTab} onChange={handleTabChange}>
                         <Tab className="!w-[35px] !h-[35px] !flex !items-center !justify-center !p-0 !rounded-md !border !border-gray-300 !border-solid !text-gray-600 !min-w-max !min-h-max !mr-2"
                             icon={<i className="fas fa-chart-bar text-sm"></i>}
                             aria-label="Chart View"
@@ -50,8 +60,12 @@ const MFSIPBook = () => {
                 />
             }
 
-            {activeTab === 0 && <MFSIPBookChart data={data} />}
-            {activeTab === 1 && <MFSIPBookList data={data} />}
+            <div style={{ display: activeTab === 0 ? "block" : "none" }}>
+                <MFSIPBookChart ref={null} data={data} />
+            </div>
+            <div style={{ display: activeTab === 1 ? "block" : "none" }}>
+                <MFSIPBookList data={data} />
+            </div>
         </div>
     );
 };

@@ -26,6 +26,143 @@ export const initialData = [
                         active: true,
                     }
                 ]
+            }, {
+                id: '1-2',
+                name: 'Quick Access Section',
+                active: true,
+                children: [
+                    {
+                        id: '1-2-1',
+                        name: 'Client',
+                        active: true,
+                        children: [
+                            {
+                                id: '1-2-1-1',
+                                name: 'Search Client Accounts',
+                                active: true,
+                            },
+                            {
+                                id: '1-2-1-2',
+                                name: 'Add New Client Account',
+                                active: true,
+                            },
+                        ]
+                    },
+                    {
+                        id: '1-2-2',
+                        name: 'MF Transactions',
+                        active: true,
+                        children: [
+                            {
+                                id: "1-2-2-1",
+                                name: "Purchase",
+                                active: true,
+                            },
+                            {
+                                id: "1-2-2-2",
+                                name: "SIP",
+                                active: true,
+                            },
+                            {
+                                id: "1-2-2-3",
+                                name: "Top-Up SIP (NSE)",
+                                active: true,
+                            },
+                            {
+                                id: "1-2-2-4",
+                                name: "Switch",
+                                active: true,
+                            },
+                            {
+                                id: "1-2-2-5",
+                                name: "STP",
+                                active: true,
+                            },
+                            {
+                                id: "1-2-2-6",
+                                name: "Redeem",
+                                active: true,
+                            },
+                            {
+                                id: "1-2-2-7",
+                                name: "SWP",
+                                active: true,
+                            },
+                            {
+                                id: "1-2-2-8",
+                                name: "Bulk Transaction",
+                                active: true,
+                            },
+                            {
+                                id: "1-2-2-9",
+                                name: "Order Drafts",
+                                active: true,
+                            },
+                        ],
+                    },
+                    {
+                        id: '1-2-3',
+                        name: 'Import CAS',
+                        active: true,
+                    },
+                    {
+                        id: '1-2-4',
+                        name: 'MF Holding',
+                        active: true,
+                    },
+                    {
+                        id: '1-2-5',
+                        name: 'Capital Gain',
+                        active: true,
+                    },
+                    {
+                        id: '1-2-6',
+                        name: 'Multi-Asset CAS',
+                        active: true,
+                    },
+                    {
+                        id: '1-2-7',
+                        name: 'AMC SOA',
+                        active: true,
+                    },
+                    {
+                        id: '1-2-8',
+                        name: 'Others',
+                        active: true,
+                        children: [
+                            {
+                                id: "1-2-8-1",
+                                name: "Executive Summary",
+                                active: true,
+                            },
+                            {
+                                id: "1-2-8-2",
+                                name: "Corpus Report",
+                                active: true,
+                            },
+                            {
+                                id: "1-2-8-3",
+                                name: "Performance Report",
+                                active: true,
+                            },
+                            {
+                                id: "1-2-8-4",
+                                name: "Corporate Actions",
+                                active: true,
+                            },
+                            {
+                                id: "1-2-8-5",
+                                name: "Periodic Holding Report",
+                                active: true,
+                            },
+                        ],
+                    },
+                    {
+                        id: '1-2-9',
+                        name: 'Pending Requests',
+                        active: true,
+                    },
+                ]
             }
         ],
     },

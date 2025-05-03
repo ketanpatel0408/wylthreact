@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { Box } from "@mui/material";
 import MFAUMGrowth from "./SlickSlider/MFAUMGrowth";
 import MFSIPBook from "./SlickSlider/MFSIPBook";
+import TotalAUM from "./SlickSlider/TotalAUM";
 
 const SlickSlider = () => {
     const [currentSlide, setCurrentSlide] = useState(0);
@@ -12,6 +13,7 @@ const SlickSlider = () => {
 
     const totalSlides = React.Children.count([
         <MFAUMGrowth />,
+        <TotalAUM />,
         <MFSIPBook />
     ]);
 
@@ -82,6 +84,7 @@ const SlickSlider = () => {
         <Box className="w-[calc(100%)] mx-auto">
             <Slider ref={sliderRef} {...settings}>
                 <MFAUMGrowth />
+                <TotalAUM />
                 <MFSIPBook />
             </Slider>
         </Box>

@@ -1,5 +1,5 @@
 import React from "react";
-import CommonChart from "../../chart";
+import CommonChart from "../../chart/column";
 
 const SIPRegActive = () => {
     return (

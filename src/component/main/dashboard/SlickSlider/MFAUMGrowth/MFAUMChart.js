@@ -1,5 +1,5 @@
 import React from "react";
-import CommonChart from "../../../chart";
+import CommonChart from "../../../chart/column";
 import ReactDOMServer from 'react-dom/server';
 import { Table, TableBody, TableCell, TableContainer, TableRow, Paper } from "@mui/material";
 
@@ -81,9 +81,19 @@ const MFAUMChart = ({ data }) => {
                                                         <TableRow key={`value-${i}`}>
                                                             <TableCell className="font-semibold pb-5" style={{ color: fieldColor }}>
                                                                 {fieldValue !== null ? fieldValue.toLocaleString("en-IN", { style: "currency", currency: "INR" }) : "-"}
+                                                                {field.label === "AUM Inflow from Existing Accounts" && (data[index]?.existingAcc || data[index]?.existingAcc === 0) && (
+                                                                    <div style={{ fontWeight: 500, color: fieldColor, marginTop: "0", lineHeight: "20px" }}>
+                                                                        {data[index]?.existingAcc} Accounts
+                                                                    </div>
+                                                                )}
                                                             </TableCell>
-                                                            <TableCell className="font-semibold pb-5" style={{ color: nextFieldColor }}>
+                                                            <TableCell className="font-semibold pb-5" style={{ color: nextFieldColor }}> 
                                                                 {nextFieldValue !== null ? nextFieldValue.toLocaleString("en-IN", { style: "currency", currency: "INR" }) : ""}
+                                                                {tooltipFields[i + 1]?.label === "AUM Inflow from New Accounts" && (data[index]?.newAcc || data[index]?.newAcc === 0) && (
+                                                                    <div style={{ fontWeight: 500, color: nextFieldColor, marginTop: "0", lineHeight: "20px" }}>
+                                                                        {data[index]?.newAcc} Accounts
+                                                                    </div>
+                                                                )}
                                                             </TableCell>
                                                         </TableRow>
                                                     </React.Fragment>

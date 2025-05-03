@@ -1,5 +1,5 @@
 import React from "react";
-import CommonChart from "../../../chart";
+import CommonChart from "../../../chart/column";
 import ReactDOMServer from 'react-dom/server';
 import { Table, TableBody, TableCell, TableContainer, TableRow, Paper } from "@mui/material";
 
@@ -83,10 +83,20 @@ const MFSIPBookChart = ({ data }) => {
                                                         </TableRow>
                                                         <TableRow key={`value-${i}`}>
                                                             <TableCell className="font-semibold pb-5" style={{ color: fieldColor }}>
-                                                                {fieldValue}
+                                                                {fieldValue !== null ? fieldValue.toLocaleString("en-IN", { style: "currency", currency: "INR" }) : "-"}
+                                                                {field.label === "Existing Accounts" && (data[index]?.existingAccountsNo || data[index]?.existingAccountsNo === 0) && (
+                                                                    <div style={{ fontWeight: 500, color: fieldColor, marginTop: "0", lineHeight: "20px" }}>
+                                                                        {data[index]?.existingAccountsNo} Accounts
+                                                                    </div>
+                                                                )}
                                                             </TableCell>
                                                             <TableCell className="font-semibold pb-5" style={{ color: nextFieldColor }}>
-                                                                {nextFieldValue}
+                                                                {nextFieldValue !== null ? nextFieldValue.toLocaleString("en-IN", { style: "currency", currency: "INR" }) : ""}
+                                                                {tooltipFields[i + 1]?.label === "New Accounts" && (data[index]?.newAccountsNo || data[index]?.newAccountsNo === 0) && (
+                                                                    <div style={{ fontWeight: 500, color: nextFieldColor, marginTop: "0", lineHeight: "20px" }}>
+                                                                        {data[index]?.newAccountsNo} Accounts
+                                                                    </div>
+                                                                )}
                                                             </TableCell>
                                                         </TableRow>
                                                     </React.Fragment>

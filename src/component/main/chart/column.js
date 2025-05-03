@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import { useColor } from "./ColorImplementation/ColorContext";
+import { useColor } from "../ColorImplementation/ColorContext";
 
 const CommonChart = ({ chartType = "column", title = "Chart", yAxisLabel = "Value", legend = false, xAxisLabel = "Data", categories = [], series = [], tooltip = null, plotOptions = null, chartMaxHeight = null }) => {
   const [chartOptions, setChartOptions] = useState({});
@@ -76,15 +76,19 @@ const CommonChart = ({ chartType = "column", title = "Chart", yAxisLabel = "Valu
         useHTML: true,
         itemStyle: { color: primaryColor, fontWeight: "bold" },
         labelFormatter: function () {
-          let colorStyle;
+          let colorStyle = "";
+
+          let series = this.chart.series.find(s => s.name === this.name);
+
           if (this.name === "Market Growth/Loss") {
-              colorStyle = "background: linear-gradient(45deg, #CB444A, #67C99C);";
-          } else {
-              colorStyle = `background-color: ${this.data[0].color};`;
+            colorStyle = "background: linear-gradient(45deg, #CB444A, #67C99C);";
+          } else if (series && series.data.length > 0) {
+            let pointColor = series.data[0]?.options?.color || series.color;
+            colorStyle = `background-color: ${pointColor};`;
           }
-  
+
           return `<span style="display: inline-block; width: 10px; height: 10px; ${colorStyle} border-radius: 50%; margin-right: 5px;"></span> ${this.name}`;
-      }
+        }
       },
       tooltip: tooltip || {
         shared: true,

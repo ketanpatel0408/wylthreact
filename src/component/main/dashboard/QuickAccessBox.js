@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Menu, MenuItem, Badge, IconButton, Button } from "@mui/material";
 import { CapitalGainSvg } from "../../svg";
+import { useMenu } from "../MenuManagement/MenuContext";
 
 const menuItems = [
     { id: "client", icon: <i className="fas fa-user text-blue-500 text-[14px]"></i>, label: "Client", dropdown: ["Search Client Accounts", "Add New Client Account"] },
@@ -29,29 +30,55 @@ const QuickAccessBox = () => {
         setMenuType(null);
     };
 
+    const { menuData } = useMenu();
+    const findMenuItem = (name, data) => {
+        for (let item of data) {
+            if (item.name === name) return item;
+            if (item.children) {
+                const found = findMenuItem(name, item.children);
+                if (found) return found;
+            }
+        }
+        return null;
+    };
+
     return (
         <div>
             <div className={`grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4 lg:flex lg:flex-wrap lg:items-center lg:space-x-4 bg-white py-2 px-4 shadow-md rounded-md ${showAll ? '' : 'overflow-hidden h-16'}`}>
-                {menuItems.map((item) => (
-                    <div key={item.id} className={`text-center relative ${item.badge ? "lg:pl-[30px] lg:border-l-2 lg:border-gray-300 lg:!ml-auto" : ""}`}>
-                        <IconButton 
-                            onClick={(e) => item.dropdown.length > 0 && handleMenuOpen(e, item.id)} 
-                            className="w-8 h-8 bg-gray-200 flex items-center justify-center rounded-full mx-auto relative"
+                {menuItems.map((item) => {
+                    const isActive = findMenuItem(item.label, menuData)?.active;
+
+                    return (
+                        <div
+                            key={item.id}
+                            className={`
+                                ${isActive ? "block" : "hidden"}
+                                text-center relative
+                                ${item.badge ? "lg:pl-[30px] lg:border-l-2 lg:border-gray-300 lg:!ml-auto" : ""}
+                            `}
                         >
-                            {item.badge ? (
-                                <Badge badgeContent={item.badge} color="error">
-                                    {item.icon}
-                                </Badge>
-                            ) : (
-                                item.icon
-                            )}
-                            {item.dropdown.length > 0 && (
-                                menuType === item.id ? <i className="fas fa-angle-up arrow text-blue-500 text-[14px] absolute top-1/2 right-[-10px] -translate-y-1/2 text-[10px]"></i> : <i className="fas fa-angle-down arrow text-blue-500 text-[14px] absolute top-1/2 right-[-10px] -translate-y-1/2 text-[10px]"></i>
-                            )}
-                        </IconButton>
-                        <span className="text-xs text-blue-500 block mt-1 font-medium">{item.label}</span>
-                    </div>
-                ))}
+                            <IconButton
+                                onClick={(e) => item.dropdown.length > 0 && handleMenuOpen(e, item.id)}
+                                className="w-8 h-8 bg-gray-200 flex items-center justify-center rounded-full mx-auto relative"
+                            >
+                                {item.badge ? (
+                                    <Badge badgeContent={item.badge} color="error">
+                                        {item.icon}
+                                    </Badge>
+                                ) : (
+                                    item.icon
+                                )}
+                                {item.dropdown.length > 0 && (
+                                    menuType === item.id
+                                        ? <i className="fas fa-angle-up arrow text-blue-500 text-[14px] absolute top-1/2 right-[-10px] -translate-y-1/2 text-[10px]"></i>
+                                        : <i className="fas fa-angle-down arrow text-blue-500 text-[14px] absolute top-1/2 right-[-10px] -translate-y-1/2 text-[10px]"></i>
+                                )}
+                            </IconButton>
+                            <span className="text-xs text-blue-500 block mt-1 font-medium">{item.label}</span>
+                        </div>
+                    );
+                })}
+
             </div>
 
             <div className="text-right block sm:hidden">
@@ -61,10 +88,29 @@ const QuickAccessBox = () => {
             </div>
 
             <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose}>
-                {menuType && menuItems.find(item => item.id === menuType)?.dropdown.map((option, index) => (
-                    <MenuItem className="!font-normal !text-[14px]" key={index} onClick={handleMenuClose}>{option}</MenuItem>
-                ))}
+                {menuType && (() => {
+                    const selectedItem = menuItems.find(item => item.id === menuType);
+
+                    return selectedItem?.dropdown?.map((option, index) => {
+                        const matchedChild = findMenuItem(option, menuData);
+
+                        if (matchedChild?.active) {
+                            return (
+                                <MenuItem
+                                    className="!font-normal !text-[14px]"
+                                    key={index}
+                                    onClick={handleMenuClose}
+                                >
+                                    {option}
+                                </MenuItem>
+                            );
+                        }
+
+                        return null;
+                    });
+                })()}
             </Menu>
+
         </div>
     );
 }

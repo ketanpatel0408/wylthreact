@@ -24,9 +24,11 @@ const Dashboard = () => {
       {findMenuItem("Code Relationship Manager Section", menuData)?.active && (
         <RegulatoryCodeManagerSection />
       )}
+      {findMenuItem("Quick Access Section", menuData)?.active && (
       <div className="px-[20px] pt-[20px] pb-[10px]">
         <QuickAccessBox />
       </div>
+      )}
       <div className="px-[20px] py-[10px] grid grid-cols-1 lg:grid-cols-2 gap-4">
         <MFTabsNavigation />
         <SlickSlider />

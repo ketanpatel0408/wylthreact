@@ -1,6 +1,6 @@
 import React from "react";
 import { Typography } from "@mui/material";
-import CommonChart from "../../chart";
+import CommonChart from "../../chart/column";
 
 const CurrFYEarnings = () => {
     const earningsData = [

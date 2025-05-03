@@ -1,41 +1,54 @@
-import React from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Switch } from '@mui/material';
+import React, { useState } from 'react';
+import { Table, TableBody, TableCell, TableContainer, TableRow, Switch, IconButton } from '@mui/material';
 import { useMenu } from './MenuContext';
 
 const NestedTable = ({ data, depth = 0 }) => {
     const { handleToggle } = useMenu();
 
+    const [expandedRow, setExpandedRow] = useState(null);
+
+    const toggleExpand = (id) => {
+        setExpandedRow((prev) => (prev === id ? null : id));
+    };
+
+    const alwaysExpandedIds = ['1'];
+
+    const isAlwaysExpanded = (id) => {
+        return alwaysExpandedIds.includes(id);
+    };
+
     return (
         <TableContainer className="border rounded-lg">
             <Table size="small" className="w-full">
-                {!depth === 0 && (
-                    <TableHead className="bg-gray-100">
-                        <TableRow>
-                            <TableCell>Menu Items</TableCell>
-                            <TableCell align="right">Status</TableCell>
-                        </TableRow>
-                    </TableHead>
-                )}
                 <TableBody>
                     {data.map((row) => {
                         const hasChildren = row.children?.length > 0;
+                        const isExpanded = expandedRow === row.id || isAlwaysExpanded(row.id);
+
                         return (
                             <React.Fragment key={row.id}>
-                                <TableRow className={`${depth % 2 === 0 ? `${depth === 0 ? "bg-blue-500" : "bg-white"}` : "bg-gray-100"} `}>
-                                    <TableCell style={{ paddingLeft: `${16 + depth * 1}px` }}>
-                                        <div className={`flex items-center ${depth === 0 && "text-[16px] font-semibold text-white"}`}>{row.name}</div>
+                                <TableRow className={`${depth % 2 === 0 ? `${depth === 0 ? "bg-blue-500" : "bg-white"}` : "bg-gray-100"}`}>
+                                    <TableCell style={{ paddingLeft: `${5 + depth * 10}px` }}>
+                                        <div className={`flex items-center ${depth === 0 && "text-[16px] font-semibold text-white pl-2"}`}>
+                                            {hasChildren && (
+                                                <IconButton size="small" className={`${depth === 0 && "!hidden"} !mr-2`} onClick={() => toggleExpand(row.id)}>
+                                                    <i className={`fas ${isExpanded ? 'fa-minus-circle' : 'fa-plus-circle'} ${depth === 0 ? "text-gray-100" : "text-blue-500"}`} />
+                                                </IconButton>
+                                            )}
+                                            {row.name}
+                                        </div>
                                     </TableCell>
                                     <TableCell align="right">
-                                        {!row.disable &&
+                                        {!row.disable && (
                                             <Switch
                                                 color="primary"
                                                 checked={row.active || false}
                                                 onChange={() => handleToggle(row.id, row.active)}
                                             />
-                                        }
+                                        )}
                                     </TableCell>
                                 </TableRow>
-                                {hasChildren && (
+                                {hasChildren && isExpanded && (
                                     <TableRow>
                                         <TableCell colSpan={2} className="p-0 border-b-0">
                                             <NestedTable data={row.children} depth={depth + 1} />
