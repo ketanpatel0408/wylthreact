@@ -25,7 +25,7 @@ const MFAUMGrowth = () => {
     };
 
     return (
-        <div className="bg-white w-full p-5">
+        <div className="bg-white w-full p-5 h-full">
             <div className="flex flex-row justify-between items-center mb-2">
                 <Typography variant="h6" className="text-blue-500">MF AUM Growth</Typography>
                 <Box className="flex justify-end">

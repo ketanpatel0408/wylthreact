@@ -6,6 +6,7 @@ import { Box } from "@mui/material";
 import MFAUMGrowth from "./SlickSlider/MFAUMGrowth";
 import MFSIPBook from "./SlickSlider/MFSIPBook";
 import TotalAUM from "./SlickSlider/TotalAUM";
+import ActiveSIP from "./SlickSlider/ActiveSIP";
 
 const SlickSlider = () => {
     const [currentSlide, setCurrentSlide] = useState(0);
@@ -14,13 +15,26 @@ const SlickSlider = () => {
     const totalSlides = React.Children.count([
         <MFAUMGrowth />,
         <TotalAUM />,
-        <MFSIPBook />
+        <MFSIPBook />,
+        <ActiveSIP />
     ]);
 
     useEffect(() => {
         const slides = document.querySelectorAll(".slick-slide");
         slides.forEach((slide) => {
             slide.classList.add("!px-[10px]");
+        });
+
+        const slidesHeight = document.querySelectorAll(".slick-slide > div");
+        let maxHeight = 0;
+
+        slidesHeight.forEach(slide => {
+            slide.style.height = "auto"; // reset
+            if (slide.offsetHeight > maxHeight) maxHeight = slide.offsetHeight;
+        });
+
+        slidesHeight.forEach(slide => {
+            slide.style.height = `${maxHeight}px`;
         });
     }, []);
 
@@ -86,6 +100,7 @@ const SlickSlider = () => {
                 <MFAUMGrowth />
                 <TotalAUM />
                 <MFSIPBook />
+                <ActiveSIP />
             </Slider>
         </Box>
     );
