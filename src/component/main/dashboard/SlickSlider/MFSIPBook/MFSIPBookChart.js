@@ -78,11 +78,11 @@ const MFSIPBookChart = ({ data }) => {
                                                 return (
                                                     <React.Fragment key={`row-group-${i}`}>
                                                         <TableRow key={`label-${i}`}>
-                                                            <TableCell className="pr-3 text-wrap">{field.label}</TableCell>
-                                                            <TableCell className="pr-3 text-wrap">{nextField?.label || ""}</TableCell>
+                                                            <TableCell className="pr-3 text-wrap !border-none !text-xs !pb-0">{field.label}</TableCell>
+                                                            <TableCell className="pr-3 text-wrap !border-none !text-xs !pb-0">{nextField?.label || ""}</TableCell>
                                                         </TableRow>
                                                         <TableRow key={`value-${i}`}>
-                                                            <TableCell className="font-semibold pb-5" style={{ color: fieldColor }}>
+                                                            <TableCell className="font-semibold pb-5 !border-none !text-xs !pb-2" style={{ color: fieldColor }}>
                                                                 {fieldValue !== null ? fieldValue.toLocaleString("en-IN", { style: "currency", currency: "INR" }) : "-"}
                                                                 {field.label === "Existing Accounts" && (data[index]?.existingAccountsNo || data[index]?.existingAccountsNo === 0) && (
                                                                     <div style={{ fontWeight: 500, color: fieldColor, marginTop: "0", lineHeight: "20px" }}>
@@ -90,7 +90,7 @@ const MFSIPBookChart = ({ data }) => {
                                                                     </div>
                                                                 )}
                                                             </TableCell>
-                                                            <TableCell className="font-semibold pb-5" style={{ color: nextFieldColor }}>
+                                                            <TableCell className="font-semibold pb-5 !border-none !text-xs !pb-2" style={{ color: nextFieldColor }}>
                                                                 {nextFieldValue !== null ? nextFieldValue.toLocaleString("en-IN", { style: "currency", currency: "INR" }) : ""}
                                                                 {tooltipFields[i + 1]?.label === "New Accounts" && (data[index]?.newAccountsNo || data[index]?.newAccountsNo === 0) && (
                                                                     <div style={{ fontWeight: 500, color: nextFieldColor, marginTop: "0", lineHeight: "20px" }}>
