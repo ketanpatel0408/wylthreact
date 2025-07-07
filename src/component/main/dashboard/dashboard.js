@@ -25,13 +25,21 @@ const Dashboard = () => {
         <RegulatoryCodeManagerSection />
       )}
       {findMenuItem("Quick Access Section", menuData)?.active && (
-      <div className="px-[20px] pt-[20px] pb-[10px]">
-        <QuickAccessBox />
-      </div>
+        <div className="px-[20px] pt-[20px] pb-[10px]">
+          <QuickAccessBox />
+        </div>
       )}
-      <div className="px-[20px] py-[10px] grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <MFTabsNavigation />
-        <SlickSlider />
+      <div className={`px-[20px] py-[10px] grid grid-cols-1 gap-4 ${findMenuItem("Performance Section", menuData)?.active &&
+          findMenuItem("MF Chart Section", menuData)?.active
+          ? "lg:grid-cols-2"
+          : "lg:grid-cols-1"
+        }`}>
+        {findMenuItem("Performance Section", menuData)?.active && (
+          <MFTabsNavigation />
+        )}
+        {findMenuItem("MF Chart Section", menuData)?.active && (
+          <SlickSlider isPerformanceActive={findMenuItem("Performance Section", menuData)?.active} />
+        )}
       </div>
     </div>
   );

@@ -163,6 +163,56 @@ export const initialData = [
                         active: true,
                     },
                 ]
+            }, {
+                id: '1-3',
+                name: 'Performance Section',
+                active: true,
+                children: [
+                    {
+                        id: '1-3-1',
+                        name: 'MF Txn. Summary',
+                        active: true
+                    }, {
+                        id: '1-3-2',
+                        name: 'Curr. FY Earnings',
+                        active: true
+                    }, {
+                        id: '1-3-3',
+                        name: 'Performance',
+                        active: true
+                    }, {
+                        id: '1-3-4',
+                        name: 'SIP Reg. & Active',
+                        active: true
+                    }, {
+                        id: '1-3-5',
+                        name: 'MF Readiness',
+                        active: true
+                    }
+                ]
+            }, {
+                id: '1-4',
+                name: 'MF Chart Section',
+                active: true,
+                children: [
+                    {
+                        id: '1-4-1',
+                        name: 'MF AUM Growth',
+                        active: true
+                    }, {
+                        id: '1-4-2',
+                        name: 'Total AUM',
+                        active: true
+                    }, {
+                        id: '1-4-3',
+                        name: 'MF SIP Book',
+                        active: true
+                    }, {
+                        id: '1-4-4',
+                        name: 'Total Active SIP',
+                        active: true
+                    },
+                ]
             }
         ],
     },

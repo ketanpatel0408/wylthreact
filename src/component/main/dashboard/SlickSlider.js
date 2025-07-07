@@ -7,17 +7,38 @@ import MFAUMGrowth from "./SlickSlider/MFAUMGrowth";
 import MFSIPBook from "./SlickSlider/MFSIPBook";
 import TotalAUM from "./SlickSlider/TotalAUM";
 import ActiveSIP from "./SlickSlider/ActiveSIP";
+import { useMenu } from "../MenuManagement/MenuContext";
 
-const SlickSlider = () => {
+const SlickSlider = ({ isPerformanceActive }) => {
     const [currentSlide, setCurrentSlide] = useState(0);
     const sliderRef = useRef(null);
 
-    const totalSlides = React.Children.count([
-        <MFAUMGrowth />,
-        <TotalAUM />,
-        <MFSIPBook />,
-        <ActiveSIP />
-    ]);
+    const { menuData } = useMenu();
+
+    const findMenuItem = (name, data) => {
+        for (let item of data) {
+            if (item.name === name) return item;
+            if (item.children) {
+                const found = findMenuItem(name, item.children);
+                if (found) return found;
+            }
+        }
+        return null;
+    };
+
+    const isMFAUMActive = findMenuItem("MF AUM Growth", menuData)?.active;
+    const isTotalAUM = findMenuItem("Total AUM", menuData)?.active;
+    const isMFSIPBook = findMenuItem("MF SIP Book", menuData)?.active;
+    const isActiveSIP = findMenuItem("Total Active SIP", menuData)?.active;
+
+    const slides = [
+        ...(isMFAUMActive ? [<MFAUMGrowth key="mfAUMActive" />] : []),
+        ...(isTotalAUM ? [<TotalAUM key="totalAUM" />] : []),
+        ...(isMFSIPBook ? [<MFSIPBook key="sipBook" />] : []),
+        ...(isActiveSIP ? [<ActiveSIP key="activeSIP" />] : [])
+    ];
+
+    const totalSlides = React.Children.count(slides);
 
     useEffect(() => {
         const slides = document.querySelectorAll(".slick-slide");
@@ -67,11 +88,13 @@ const SlickSlider = () => {
         </button>
     );
 
+    const slidesToShow = slides.length === 1 ? 1 : isPerformanceActive ? 1.2 : 2.2;
+
     const settings = {
         dots: false,
         infinite: false,
         speed: 500,
-        slidesToShow: 1.2,
+        slidesToShow,
         slidesToScroll: 1,
         arrows: true,
         prevArrow: <PrevArrow />,
@@ -97,10 +120,9 @@ const SlickSlider = () => {
     return (
         <Box className="w-[calc(100%)] mx-auto">
             <Slider ref={sliderRef} {...settings}>
-                <MFAUMGrowth />
-                <TotalAUM />
-                <MFSIPBook />
-                <ActiveSIP />
+                {slides.map((slide, index) => (
+                    <div key={index}>{slide}</div>
+                ))}
             </Slider>
         </Box>
     );
