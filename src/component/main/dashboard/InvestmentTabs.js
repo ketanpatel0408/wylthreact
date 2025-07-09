@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Tabs, Tab, Box } from "@mui/material";
-import MFTxnSummaryContent from "./MFTabsNavigation/MFTxnSummaryContent";
-import CurrFYEarnings from "./MFTabsNavigation/CurrFYEarnings";
-import Performance from "./MFTabsNavigation/Performance";
-import MFReadiness from "./MFTabsNavigation/MFReadiness";
+import SIPRegActive from "./MFTabsNavigation/SIPRegActive";
 import { useMenu } from "../MenuManagement/MenuContext";
-import Calender from "./MFTabsNavigation/Calender";
+import TotalAUM from "./InvestmentTabs/TotalAUM";
+import MFAUMGrowth from "./InvestmentTabs/MFAUMGrowth";
+import MFSIPBook from "./InvestmentTabs/MFSIPBook";
+import ActiveSIP from "./InvestmentTabs/ActiveSIP";
 
 const findMenuItem = (name, data) => {
   for (let item of data) {
@@ -24,30 +24,30 @@ const MFTabsNavigation = () => {
 
   const tabs = useMemo(() => [
     {
-      label: "MF Txn. Summary",
-      component: <MFTxnSummaryContent />,
-      active: findMenuItem("MF Txn. Summary", menuData)?.active,
+      label: "Total AUM",
+      component: <TotalAUM />,
+      active: findMenuItem("Total AUM", menuData)?.active,
     },
     {
-      label: "MF Readiness",
-      component: <MFReadiness />,
-      active: findMenuItem("MF Readiness", menuData)?.active,
+      label: "MF AUM Growth",
+      component: <MFAUMGrowth />,
+      active: findMenuItem("MF AUM Growth", menuData)?.active,
     },
     {
-      label: "Curr. FY Earnings",
-      component: <CurrFYEarnings />,
-      active: findMenuItem("Curr. FY Earnings", menuData)?.active,
+      label: "MF SIP Book",
+      component: <MFSIPBook />,
+      active: findMenuItem("MF SIP Book", menuData)?.active,
     },
     {
-      label: "Performance",
-      component: <Performance />,
-      active: findMenuItem("Performance", menuData)?.active,
+      label: "Active SIPs",
+      component: <ActiveSIP />,
+      active: findMenuItem("Active SIPs", menuData)?.active,
     },
     {
-      label: "Calender",
-      component: <Calender />,
-      active: findMenuItem("Calender", menuData)?.active,
-    }
+      label: "SIP Reg. & Active",
+      component: <SIPRegActive />,
+      active: findMenuItem("SIP Reg. & Active", menuData)?.active,
+    },
   ], [menuData]);
 
   const activeTabs = tabs.filter(tab => tab.active);

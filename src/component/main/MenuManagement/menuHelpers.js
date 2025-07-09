@@ -165,53 +165,57 @@ export const initialData = [
                 ]
             }, {
                 id: '1-3',
-                name: 'Performance Section',
+                name: 'Investment Tabs',
                 active: true,
                 children: [
                     {
                         id: '1-3-1',
-                        name: 'MF Txn. Summary',
+                        name: 'Total AUM',
                         active: true
                     }, {
                         id: '1-3-2',
-                        name: 'Curr. FY Earnings',
+                        name: 'MF AUM Growth',
                         active: true
                     }, {
                         id: '1-3-3',
-                        name: 'Performance',
+                        name: 'MF SIP Book',
                         active: true
                     }, {
                         id: '1-3-4',
-                        name: 'SIP Reg. & Active',
+                        name: 'Active SIPs',
                         active: true
                     }, {
                         id: '1-3-5',
-                        name: 'MF Readiness',
+                        name: 'SIP Reg. & Active',
                         active: true
                     }
                 ]
             }, {
                 id: '1-4',
-                name: 'MF Chart Section',
+                name: 'Performance Section',
                 active: true,
                 children: [
                     {
                         id: '1-4-1',
-                        name: 'MF AUM Growth',
+                        name: 'MF Txn. Summary',
                         active: true
                     }, {
                         id: '1-4-2',
-                        name: 'Total AUM',
+                        name: 'MF Readiness',
                         active: true
                     }, {
                         id: '1-4-3',
-                        name: 'MF SIP Book',
+                        name: 'Curr. FY Earnings',
                         active: true
                     }, {
                         id: '1-4-4',
-                        name: 'Total Active SIP',
+                        name: 'Performance',
                         active: true
-                    },
+                    }, {
+                        id: '1-4-5',
+                        name: 'Calender',
+                        active: true
+                    }
                 ]
             }
         ],

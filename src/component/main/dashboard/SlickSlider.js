@@ -3,10 +3,10 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Box } from "@mui/material";
-import MFAUMGrowth from "./SlickSlider/MFAUMGrowth";
-import MFSIPBook from "./SlickSlider/MFSIPBook";
-import TotalAUM from "./SlickSlider/TotalAUM";
-import ActiveSIP from "./SlickSlider/ActiveSIP";
+import MFAUMGrowth from "./InvestmentTabs/MFAUMGrowth";
+import MFSIPBook from "./InvestmentTabs/MFSIPBook";
+import TotalAUM from "./InvestmentTabs/TotalAUM";
+import ActiveSIP from "./InvestmentTabs/ActiveSIP";
 import { useMenu } from "../MenuManagement/MenuContext";
 
 const SlickSlider = ({ isPerformanceActive }) => {

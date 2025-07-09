@@ -3,7 +3,7 @@ import RegulatoryCodeManagerSection from "./RegulatoryCodeManagerSection/Regulat
 import { useMenu } from "../MenuManagement/MenuContext";
 import QuickAccessBox from "./QuickAccessBox";
 import MFTabsNavigation from "./MFTabsNavigation";
-import SlickSlider from "./SlickSlider";
+import InvestmentTabs from "./InvestmentTabs";
 
 const Dashboard = () => {
   const { menuData } = useMenu();
@@ -30,16 +30,17 @@ const Dashboard = () => {
         </div>
       )}
       <div className={`px-[20px] py-[10px] grid grid-cols-1 gap-4 ${findMenuItem("Performance Section", menuData)?.active &&
-          findMenuItem("MF Chart Section", menuData)?.active
-          ? "lg:grid-cols-2"
-          : "lg:grid-cols-1"
+        findMenuItem("Investment Tabs", menuData)?.active
+        ? "lg:grid-cols-2"
+        : "lg:grid-cols-1"
         }`}>
+        {findMenuItem("Investment Tabs", menuData)?.active && (
+          <InvestmentTabs />
+        )}
         {findMenuItem("Performance Section", menuData)?.active && (
           <MFTabsNavigation />
         )}
-        {findMenuItem("MF Chart Section", menuData)?.active && (
-          <SlickSlider isPerformanceActive={findMenuItem("Performance Section", menuData)?.active} />
-        )}
+       
       </div>
     </div>
   );
