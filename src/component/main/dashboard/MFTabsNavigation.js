@@ -5,7 +5,7 @@ import CurrFYEarnings from "./MFTabsNavigation/CurrFYEarnings";
 import Performance from "./MFTabsNavigation/Performance";
 import MFReadiness from "./MFTabsNavigation/MFReadiness";
 import { useMenu } from "../MenuManagement/MenuContext";
-import Calender from "./MFTabsNavigation/Calender";
+import Calendar from "./MFTabsNavigation/Calendar";
 
 const findMenuItem = (name, data) => {
   for (let item of data) {
@@ -44,9 +44,9 @@ const MFTabsNavigation = () => {
       active: findMenuItem("Performance", menuData)?.active,
     },
     {
-      label: "Calender",
-      component: <Calender />,
-      active: findMenuItem("Calender", menuData)?.active,
+      label: "Calendar",
+      component: <Calendar />,
+      active: findMenuItem("Calendar", menuData)?.active,
     }
   ], [menuData]);
 

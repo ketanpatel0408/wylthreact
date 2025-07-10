@@ -1,0 +1,37 @@
+.fc-list-day-side-text, .fc-list-day-text {
+    text-align: left;
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: 500;
+    letter-spacing: 0px;
+    color: var(--blue-500);
+    opacity: 1;
+}
+
+.fc-list-event-time {
+  text-align: left;
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: 400;
+    letter-spacing: 0px;
+    color: var(--blue-500);
+    opacity: 1;
+    padding: 7px 13px;
+    border-bottom: 1px solid #D9D8D8;
+}
+
+.fc-list-event-title {
+    text-align: left;
+    text-decoration: underline !important;
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: 400;
+    letter-spacing: 0px;
+    color: var(--blue-500);
+    opacity: 1;
+    padding: 7px 13px !important;
+}
+
+.fc-list-event-graphic {
+  display: none !important;
+}

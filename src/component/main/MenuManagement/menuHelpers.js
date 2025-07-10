@@ -213,7 +213,7 @@ export const initialData = [
                         active: true
                     }, {
                         id: '1-4-5',
-                        name: 'Calender',
+                        name: 'Calendar',
                         active: true
                     }
                 ]
